@@ -1,0 +1,25 @@
+name: Metrics
+on:
+  # Schedule weekly updates
+  schedule: [{ cron: "*/5 * * * *" }]
+  # (optional) Run workflow manually
+  workflow_dispatch:
+  # (optional) Run workflow when pushing on master/main
+  push: { branches: ["main"] }
+jobs:
+  github-metrics:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: lowlighter/metrics@latest
+        name: Metrics
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          config_display: large
+          base: header, activity, community, repositories, metadata
+          base_indepth: yes
+          repositories: 10000
+          user: CentricaIntegration
+          plugin_languages: yes
+          plugin_languages_other: yes
